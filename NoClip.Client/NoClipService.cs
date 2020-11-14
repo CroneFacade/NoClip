@@ -15,19 +15,19 @@ namespace CroneFacade.NoClip.Client
 	[PublicAPI]
 	public class NoClipService : Service
 	{
-		//private NoClipOverlay overlay;
-
 		public bool NoClipEnabled { get; private set; }
 		public Vector3 NoClipPosition { get; private set; }
 
 		// TODO: Move these settings to a config
 		private float upPitchDivider = 70f;
 		private float downPitchDivider = 35f;
-		private float movementSpeed = 1f;
-		private float movementSpeedInterval = 0.3f;
-		private float movementSpeedBase = 1f;
-		private float movementSpeedCap = 20f;
+		private float movementSpeed = 0.5f;
+		private float movementSpeedInterval = 0.07f;
+		private float movementSpeedBase = 0.5f;
+		private float movementSpeedCap = 17f;
 		private Control noClipHotKey = Control.VehicleHeadlight;
+		private Control moveDownHotKey = Control.Cover;
+		private Control moveUpHotKey = Control.Pickup;
 
 		public NoClipService(ILogger logger, ITickManager ticks, ICommunicationManager comms, ICommandManager commands, IOverlayManager overlay, User user) : base(logger, ticks, comms, commands, overlay, user)
 		{
@@ -56,26 +56,26 @@ namespace CroneFacade.NoClip.Client
 			}
 			else
 			{
-				if (this.movementSpeed - this.movementSpeedInterval >= this.movementSpeedBase)
-					this.movementSpeed -= this.movementSpeedInterval;
+				if (this.movementSpeed - this.movementSpeedInterval * 2 >= this.movementSpeedBase)
+					this.movementSpeed -= this.movementSpeedInterval * 2;
 			}
 
 			if (Game.IsControlPressed(1, Control.MoveUpOnly))
 			{
 				newOffset.Y += -this.movementSpeed;
-				newOffset.Z += (GameplayCamera.RelativePitch < 0f ? GameplayCamera.RelativePitch / this.downPitchDivider : GameplayCamera.RelativePitch / this.upPitchDivider);
+				newOffset.Z += (GameplayCamera.RelativePitch < 0f ? GameplayCamera.RelativePitch / this.downPitchDivider : GameplayCamera.RelativePitch / this.upPitchDivider) * this.movementSpeed;
 			}
 			else if (Game.IsControlPressed(1, Control.MoveDownOnly))
 			{
 				newOffset.Y += this.movementSpeed;
-				newOffset.Z += -((GameplayCamera.RelativePitch < 0f ? GameplayCamera.RelativePitch / this.downPitchDivider : GameplayCamera.RelativePitch / this.upPitchDivider));
+				newOffset.Z += -(GameplayCamera.RelativePitch < 0f ? GameplayCamera.RelativePitch / this.downPitchDivider : GameplayCamera.RelativePitch / this.upPitchDivider) * this.movementSpeed;
 			}
 
-			if (Game.IsControlPressed(1, Control.Cover))
+			if (Game.IsControlPressed(1, moveUpHotKey))
 			{
 				newOffset.Z += this.movementSpeed;
 			}
-			else if (Game.IsControlPressed(1, Control.Pickup))
+			else if (Game.IsControlPressed(1, moveDownHotKey))
 			{
 				newOffset.Z += -this.movementSpeed;
 			}
@@ -91,10 +91,12 @@ namespace CroneFacade.NoClip.Client
 			{
 				NoClipPosition = Game.Player.Character.Position;
 				this.Ticks.On(NoClipTick);
+				Game.Player.Character.IsInvincible = true;
 			}
 			else
 			{
 				this.Ticks.Off(NoClipTick);
+				Game.Player.Character.IsInvincible = false;
 			}
 		}
 
