@@ -7,6 +7,7 @@ A simple noclip mod.
 
 * Press H to toggle noclip.
 * Move with W, A, S and D.
+* Move your mouse to change direction.
 * Change elevation with Q and E.
 * Hold Shift to increase speed.
 * Hold Left CTRL to go slow.
