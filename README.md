@@ -1,6 +1,6 @@
 # CroneFacade NoClip NFive Plugin
 [![License](https://img.shields.io/github/license/CroneFacade/NoClip.svg)](LICENSE)
-[![Build Status](https://img.shields.io/appveyor/ci/CroneFacade/NoClip/master.svg)](https://ci.appveyor.com/project/CroneFacade/NoClip)
+[![Build Status](https://img.shields.io/appveyor/ci/CroneFacade/NoClip/main.svg)](https://ci.appveyor.com/project/CroneFacade/NoClip)
 [![Release Version](https://img.shields.io/github/release/CroneFacade/NoClip/all.svg)](https://github.com/CroneFacade/NoClip/releases)
 
 A simple noclip mod.
