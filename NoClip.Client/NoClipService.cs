@@ -24,6 +24,7 @@ namespace CroneFacade.NoClip.Client
 		private float movementSpeed = 0.5f;
 		private float movementSpeedInterval = 0.07f;
 		private float movementSpeedBase = 0.5f;
+		private float movementSpeedSlow = 0.01f;
 		private float movementSpeedCap = 17f;
 		private Control noClipHotKey = Control.VehicleHeadlight;
 		private Control moveDownHotKey = Control.Cover;
@@ -46,7 +47,7 @@ namespace CroneFacade.NoClip.Client
 			// Change character heading to match camera heading
 			Game.Player.Character.Heading += Game.Player.Character.Heading < 180f ? GameplayCamera.RelativeHeading + 180f : GameplayCamera.RelativeHeading - 180f;
 
-			var newOffset = new Vector3(0f,0f,-1f);
+			var newOffset = new Vector3(0f, 0f, -1f);
 
 			// Smooth acceleration / deceleration
 			if (Game.IsControlPressed(1, Control.Sprint))
@@ -54,10 +55,19 @@ namespace CroneFacade.NoClip.Client
 				if (this.movementSpeed + this.movementSpeedInterval <= this.movementSpeedCap)
 					this.movementSpeed += this.movementSpeedInterval;
 			}
+			else if (Game.IsControlPressed(1, Control.Duck))
+			{
+				this.movementSpeed = this.movementSpeedSlow;
+			}
 			else
 			{
 				if (this.movementSpeed - this.movementSpeedInterval * 2 >= this.movementSpeedBase)
 					this.movementSpeed -= this.movementSpeedInterval * 2;
+
+				if (this.movementSpeed < this.movementSpeedBase)
+				{
+					this.movementSpeed = this.movementSpeedBase;
+				}
 			}
 
 			if (Game.IsControlPressed(1, Control.MoveUpOnly))
