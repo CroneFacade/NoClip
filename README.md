@@ -5,15 +5,11 @@
 
 A simple noclip mod.
 
-Press H to toggle noclip.
-
-Move with W, A, S and D.
-
-Change elevation with Q and E.
-
-Hold Shift to increase speed.
-
-Hold Left CTRL to go slow.
+* Press H to toggle noclip.
+* Move with W, A, S and D.
+* Change elevation with Q and E.
+* Hold Shift to increase speed.
+* Hold Left CTRL to go slow.
 
 ## Installation
 Install the plugin into your server from the [NFive Hub](https://hub.nfive.io/CroneFacade/NoClip): `nfpm install CroneFacade/NoClip`
