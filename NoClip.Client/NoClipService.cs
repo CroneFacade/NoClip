@@ -81,6 +81,15 @@ namespace CroneFacade.NoClip.Client
 				newOffset.Z += -(GameplayCamera.RelativePitch < 0f ? GameplayCamera.RelativePitch / this.downPitchDivider : GameplayCamera.RelativePitch / this.upPitchDivider) * this.movementSpeed;
 			}
 
+			if (Game.IsControlPressed(1, Control.MoveLeftOnly))
+			{
+				newOffset.X += this.movementSpeed;
+			}
+			else if(Game.IsControlPressed(1, Control.MoveRightOnly))
+			{
+				newOffset.X += -this.movementSpeed;
+			}
+
 			if (Game.IsControlPressed(1, moveUpHotKey))
 			{
 				newOffset.Z += this.movementSpeed;
