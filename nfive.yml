@@ -7,4 +7,3 @@ client:
   main:
     - CroneFacade.NoClip.Client
   files:
-    - Overlays/NoClipOverlay.html
